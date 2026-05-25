@@ -203,7 +203,7 @@ function App() {
   const [bulkPoints, setBulkPoints] = useState(1);
   const [bulkDifficulty, setBulkDifficulty] = useState<Question['difficulty']>('Medium');
   const [geminiApiKey, setGeminiApiKey] = useState('');
-  const [googleClientId, setGoogleClientId] = useState('');
+  const [googleClientId, setGoogleClientId] = useState('138111820315-l8vvnsnc20s78pm6368s0m6roocu59nu.apps.googleusercontent.com');
   const [geminiModel, setGeminiModel] = useState('gemini-3.5-flash');
   const [modelSelectValue, setModelSelectValue] = useState('gemini-3.5-flash');
   const [customModelName, setCustomModelName] = useState('');
@@ -247,7 +247,11 @@ function App() {
     const savedModel = localStorage.getItem('formify_gemini_model') || 'gemini-3.5-flash';
 
     if (savedKey) setGeminiApiKey(savedKey);
-    if (savedClientId) setGoogleClientId(savedClientId);
+    if (savedClientId) {
+      setGoogleClientId(savedClientId);
+    } else {
+      setGoogleClientId('138111820315-l8vvnsnc20s78pm6368s0m6roocu59nu.apps.googleusercontent.com');
+    }
     if (savedDraft) setDraftExists(true);
     
     setGeminiModel(savedModel);
