@@ -19,6 +19,7 @@ It includes an interactive question editor, a live-syncing Google Forms simulato
 *   **Bulk Actions Panel**: Collapsible panel above the question list enabling mass point changes, mass difficulty overrides, option choice shuffles (keeping answer keys aligned), and global regex-escaped search and replace text parsing.
 *   **AI Translation Engine**: Translate the entire quiz (title, description, questions, choices, answers) into target languages directly client-side, while keeping mathematical LaTeX and KaTeX formatting strictly intact.
 *   **LaTeX Exporter Cleanup**: Automatically unwraps LaTeX text formatting commands (like `\text{...}`) and translates LaTeX math symbols to their Unicode equivalents during export, ensuring clean, backslash-free text in Google Forms.
+*   **Fully Responsive Web Layout**: Optimized for desktop, tablet, and mobile screen sizes. Features a sticky mobile tab navigation (`.mobile-workspace-tabs`) that switches between the Editor and the Google Form Live Simulator seamlessly, preventing long-scrolling issues on small displays.
 
 ---
 
