@@ -241,6 +241,7 @@ function App() {
   // Onboarding Guided Tour State
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
+  const [showApiKeyHelp, setShowApiKeyHelp] = useState(false);
   
   // Toast Notification State
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -843,6 +844,29 @@ function App() {
                   Google AI Studio <ExternalLink size={10} style={{ display: 'inline' }} />
                 </a>.
               </p>
+              <div style={{ marginTop: '2px' }}>
+                <button
+                  type="button"
+                  onClick={() => setShowApiKeyHelp(!showApiKeyHelp)}
+                  style={{ background: 'transparent', border: 'none', color: 'var(--color-accent)', fontSize: '11px', cursor: 'pointer', textDecoration: 'underline', padding: 0, display: 'flex', alignItems: 'center', gap: '4px' }}
+                >
+                  <span>{showApiKeyHelp ? '▼' : '▶'} How to get a free Gemini API key?</span>
+                </button>
+                {showApiKeyHelp && (
+                  <div className="glass-card" style={{ marginTop: '8px', padding: '12px', background: 'rgba(255,255,255,0.01)', fontSize: '11px', border: '1px solid var(--border-light)' }}>
+                    <ol style={{ paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px', color: 'var(--text-muted)' }}>
+                      <li>
+                        Open <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+                          Google AI Studio <ExternalLink size={8} style={{ display: 'inline' }} />
+                        </a>.
+                      </li>
+                      <li>Click the blue <strong>"Get API key"</strong> button in the sidebar or top menu.</li>
+                      <li>Click <strong>"Create API key"</strong>, select or create a project, and copy the key.</li>
+                      <li>Paste the copied key into the input field above.</li>
+                    </ol>
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="flex-column gap-8">
@@ -1763,6 +1787,29 @@ function App() {
                     Google AI Studio
                   </a>.
                 </p>
+                <div style={{ marginTop: '2px' }}>
+                  <button
+                    type="button"
+                    onClick={() => setShowApiKeyHelp(!showApiKeyHelp)}
+                    style={{ background: 'transparent', border: 'none', color: 'var(--color-accent)', fontSize: '11px', cursor: 'pointer', textDecoration: 'underline', padding: 0, display: 'flex', alignItems: 'center', gap: '4px' }}
+                  >
+                    <span>{showApiKeyHelp ? '▼' : '▶'} How to get a free Gemini API key?</span>
+                  </button>
+                  {showApiKeyHelp && (
+                    <div className="glass-card" style={{ marginTop: '8px', padding: '12px', background: 'rgba(255,255,255,0.01)', fontSize: '11px', border: '1px solid var(--border-light)' }}>
+                      <ol style={{ paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px', color: 'var(--text-muted)' }}>
+                        <li>
+                          Open <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+                            Google AI Studio <ExternalLink size={8} style={{ display: 'inline' }} />
+                          </a>.
+                        </li>
+                        <li>Click the blue <strong>"Get API key"</strong> button in the sidebar or top menu.</li>
+                        <li>Click <strong>"Create API key"</strong>, select or create a project, and copy the key.</li>
+                        <li>Paste the copied key into the input field above.</li>
+                      </ol>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="flex-column gap-8">
