@@ -651,29 +651,80 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:f
 }
 
 /* Responsive Overrides */
+.dashboard-container {
+  max-width: 800px;
+  margin: 65px auto;
+  width: 90%;
+}
+.mobile-workspace-tabs {
+  display: none;
+}
+
 @media (max-width: 1024px) {
+  .mobile-workspace-tabs {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 16px;
+    gap: 8px;
+  }
+  .mobile-tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .mobile-tab-btn.active {
+    color: var(--color-primary-glow);
+    border-bottom-color: var(--color-primary);
+  }
+  
   .workspace-container {
     flex-direction: column;
     height: auto;
     overflow: visible;
+    padding: 24px 20px;
   }
-  .editor-pane {
+  .editor-pane, .simulator-pane {
     max-height: none;
     overflow: visible;
   }
-  .simulator-pane {
-    max-height: 600px;
-    overflow-y: auto;
+  .workspace-container.show-editor .simulator-pane {
+    display: none !important;
+  }
+  .workspace-container.show-simulator .editor-pane {
+    display: none !important;
   }
 }
+
 @media (max-width: 640px) {
+  .dashboard-container {
+    margin: 20px auto;
+    width: 95%;
+  }
+  .config-container {
+    margin: 20px auto;
+    padding: 20px;
+  }
   .app-header {
     padding: 15px 20px;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
+  }
+  .app-header .flex-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
   }
   .workspace-container {
-    padding: 15px 20px;
+    padding: 15px 12px;
   }
   .grid-cols-2 {
     grid-template-columns: 1fr;

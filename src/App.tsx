@@ -195,6 +195,7 @@ interface Toast {
 function App() {
   // Navigation & Config State
   const [step, setStep] = useState<'config' | 'upload' | 'editor' | 'export'>('config');
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<'editor' | 'simulator'>('editor');
   const [isTranslating, setIsTranslating] = useState(false);
   const [translationLanguage, setTranslationLanguage] = useState('Spanish');
   const [showBulkActions, setShowBulkActions] = useState(false);
@@ -898,7 +899,7 @@ function App() {
 
       {/* Step 2: Upload Zone */}
       {step === 'upload' && (
-        <main style={{ maxWidth: '800px', margin: '80px auto', width: '90%' }}>
+        <main className="dashboard-container">
           {isProcessing ? (
             <div className="glass-panel loader-wrapper">
               <div className="spinner"></div>
@@ -972,7 +973,25 @@ function App() {
 
       {/* Step 3: Workspace (Editor + Simulator) */}
       {step === 'editor' && quizData && (
-        <main className="workspace-container">
+        <main className={`workspace-container show-${activeWorkspaceTab}`}>
+          
+          {/* Mobile Workspace Tabs Header */}
+          <div className="mobile-workspace-tabs">
+            <button
+              type="button"
+              onClick={() => setActiveWorkspaceTab('editor')}
+              className={`mobile-tab-btn ${activeWorkspaceTab === 'editor' ? 'active' : ''}`}
+            >
+              Question Editor
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveWorkspaceTab('simulator')}
+              className={`mobile-tab-btn ${activeWorkspaceTab === 'simulator' ? 'active' : ''}`}
+            >
+              Form Preview
+            </button>
+          </div>
           
           {/* Left Side: Question Editor */}
           <section className="editor-pane">
@@ -1539,7 +1558,7 @@ function App() {
 
       {/* Step 4: Export Center */}
       {step === 'export' && quizData && (
-        <main style={{ maxWidth: '800px', margin: '40px auto', width: '90%' }} className="glass-panel">
+        <main className="dashboard-container glass-panel">
           <div style={{ borderBottom: '1px solid var(--border-light)', padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '24px' }}>Export Your Quiz</h2>
