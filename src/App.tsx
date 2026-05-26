@@ -1983,7 +1983,7 @@ function App() {
               {onboardingStep === 5 && (
                 <div className="onboarding-slide">
                   <div className="onboarding-welcome-icon" style={{ background: 'rgba(6, 182, 212, 0.1)', borderColor: 'var(--color-accent)' }}>
-                    <Download size={36} color="var(--color-accent)'" />
+                    <Download size={36} color="var(--color-accent)" />
                   </div>
                   <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Step 4: Exporters & Fallbacks</h3>
                   <p style={{ color: 'var(--text-muted)' }}>
