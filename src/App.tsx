@@ -913,24 +913,6 @@ function App() {
               )}
             </div>
 
-            <div className="flex-column gap-8">
-              <label style={{ fontWeight: 600, fontSize: '14px' }}>
-                Google Cloud Client ID <span style={{ color: 'var(--text-dim)', fontWeight: 400 }}>(Optional)</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Enter client_id (e.g. 12345-abcde.apps.googleusercontent.com)"
-                value={googleClientId}
-                onChange={(e) => setGoogleClientId(e.target.value)}
-              />
-              <p style={{ fontSize: '11px', color: 'var(--text-dim)' }}>
-                Required ONLY if you want the app to automatically create Google Forms directly in your Drive. Create a Client ID in the{' '}
-                <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
-                  Google Cloud Console
-                </a>. Otherwise, you can bypass this and use the **Apps Script generator** instead!
-              </p>
-            </div>
-
             <button type="submit" className="btn-primary w-full justify-between" style={{ marginTop: '10px' }}>
               <span>Configure & Get Started</span>
               <CheckCircle2 size={16} />
@@ -2001,7 +1983,9 @@ function App() {
                       <CheckCircle2 className="onboarding-feature-pill-icon" size={16} />
                       <div>
                         <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Google Cloud Client ID (Optional)</h4>
-                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Configure a Google OAuth Client ID to upload question diagram images and create Google Forms directly from the workspace.</p>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>
+                          A default Client ID is already configured for you! You do not need to create one unless you want to override it with your own custom Google Cloud developer credentials.
+                        </p>
                       </div>
                     </div>
                   </div>
