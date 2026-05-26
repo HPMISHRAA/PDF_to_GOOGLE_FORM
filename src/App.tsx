@@ -863,6 +863,12 @@ function App() {
                       <li>Click the blue <strong>"Get API key"</strong> button in the sidebar or top menu.</li>
                       <li>Click <strong>"Create API key"</strong>, select or create a project, and copy the key.</li>
                       <li>Paste the copied key into the input field above.</li>
+                      <li>
+                        Need help? Watch the{' '}
+                        <a href="https://www.youtube.com/results?search_query=how+to+get+gemini+api+key" target="_blank" rel="noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+                          YouTube Video Guide <ExternalLink size={8} style={{ display: 'inline' }} />
+                        </a>.
+                      </li>
                     </ol>
                   </div>
                 )}
@@ -1806,6 +1812,12 @@ function App() {
                         <li>Click the blue <strong>"Get API key"</strong> button in the sidebar or top menu.</li>
                         <li>Click <strong>"Create API key"</strong>, select or create a project, and copy the key.</li>
                         <li>Paste the copied key into the input field above.</li>
+                        <li>
+                          Need help? Watch the{' '}
+                          <a href="https://www.youtube.com/results?search_query=how+to+get+gemini+api+key" target="_blank" rel="noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+                            YouTube Video Guide <ExternalLink size={8} style={{ display: 'inline' }} />
+                          </a>.
+                        </li>
                       </ol>
                     </div>
                   )}
@@ -1976,6 +1988,12 @@ function App() {
                           <li>Click the blue <strong>"Get API key"</strong> button in the sidebar/top menu.</li>
                           <li>Click <strong>"Create API key"</strong> and copy your key.</li>
                           <li>Paste it into our <strong>Credentials</strong> setup panel.</li>
+                          <li>
+                            Need help? Watch the{' '}
+                            <a href="https://www.youtube.com/results?search_query=how+to+get+gemini+api+key" target="_blank" rel="noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+                              YouTube Video Guide <ExternalLink size={8} style={{ display: 'inline' }} />
+                            </a>.
+                          </li>
                         </ol>
                       </div>
                     </div>
