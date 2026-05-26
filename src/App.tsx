@@ -826,6 +826,30 @@ function App() {
             </p>
           </div>
 
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '16px', margin: '10px 0' }}>
+            <div className="glass-card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center', background: 'rgba(255,255,255,0.01)' }}>
+              <div style={{ background: 'rgba(99, 102, 241, 0.1)', padding: '10px', borderRadius: '12px', border: '1px solid var(--color-primary-glow)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Sparkles size={20} color="var(--color-primary)" />
+              </div>
+              <h4 style={{ fontSize: '13px', fontWeight: 600, fontFamily: 'var(--font-brand)' }}>AI MCQ OCR</h4>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>Extracts scanned pages, handwriting, math, and diagrams instantly.</p>
+            </div>
+            <div className="glass-card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center', background: 'rgba(255,255,255,0.01)' }}>
+              <div style={{ background: 'rgba(6, 182, 212, 0.1)', padding: '10px', borderRadius: '12px', border: '1px solid rgba(6, 182, 212, 0.2)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Tv size={20} color="var(--color-accent)" />
+              </div>
+              <h4 style={{ fontSize: '13px', fontWeight: 600, fontFamily: 'var(--font-brand)' }}>Live Simulator</h4>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>Real-time preview matching Google Forms' layout exactly.</p>
+            </div>
+            <div className="glass-card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center', background: 'rgba(255,255,255,0.01)' }}>
+              <div style={{ background: 'rgba(168, 85, 247, 0.1)', padding: '10px', borderRadius: '12px', border: '1px solid rgba(168, 85, 247, 0.2)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Download size={20} color="var(--color-secondary)" />
+              </div>
+              <h4 style={{ fontSize: '13px', fontWeight: 600, fontFamily: 'var(--font-brand)' }}>Double Export</h4>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>One-click Google Drive integration or Apps Script fallback.</p>
+            </div>
+          </div>
+
           <form onSubmit={saveCredentials} className="flex-column gap-16">
             <div className="flex-column gap-8">
               <label className="flex-row align-center gap-8" style={{ fontWeight: 600, fontSize: '14px' }}>
