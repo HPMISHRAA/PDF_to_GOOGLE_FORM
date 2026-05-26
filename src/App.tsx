@@ -17,7 +17,12 @@ import {
   Eye,
   BookOpen,
   HelpCircle,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Compass,
+  Sparkles,
+  Cpu,
+  Layers,
+  Tv
 } from 'lucide-react';
 import { GeminiService } from './services/GeminiService';
 import type { QuizData, Question } from './services/GeminiService';
@@ -233,6 +238,10 @@ function App() {
   // Copy to clipboard code states
   const [copiedCode, setCopiedCode] = useState(false);
   
+  // Onboarding Guided Tour State
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboardingStep, setOnboardingStep] = useState(1);
+  
   // Toast Notification State
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -246,6 +255,7 @@ function App() {
     const savedClientId = localStorage.getItem('formify_google_client_id');
     const savedDraft = localStorage.getItem('formify_quiz_draft');
     const savedModel = localStorage.getItem('formify_gemini_model') || 'gemini-3.5-flash';
+    const onboardingCompleted = localStorage.getItem('formify_onboarding_completed');
 
     if (savedKey) setGeminiApiKey(savedKey);
     if (savedClientId) {
@@ -266,6 +276,11 @@ function App() {
     // If API Key is already configured, go straight to upload screen
     if (savedKey) {
       setStep('upload');
+    }
+
+    // Trigger onboarding on first visit
+    if (onboardingCompleted !== 'true') {
+      setShowOnboarding(true);
     }
   }, []);
 
@@ -753,6 +768,11 @@ function App() {
     });
   };
 
+  const handleCloseOnboarding = () => {
+    localStorage.setItem('formify_onboarding_completed', 'true');
+    setShowOnboarding(false);
+  };
+
   return (
     <div className="flex-column" style={{ minHeight: '100vh' }}>
       
@@ -780,9 +800,12 @@ function App() {
         <div className="flex-row align-center gap-12">
           {draftExists && (
             <button className="btn-secondary" onClick={handleRestoreDraft} style={{ padding: '8px 16px', fontSize: '13px' }}>
-              <RotateCcw size={14} /> Resume Draft
+               <RotateCcw size={14} /> Resume Draft
             </button>
           )}
+          <button className="btn-secondary" onClick={() => { setOnboardingStep(1); setShowOnboarding(true); }} style={{ padding: '8px 12px' }} title="Take Guided Tour">
+            <Compass size={16} /> Tour
+          </button>
           <button className="btn-secondary" onClick={() => setShowInfoModal(true)} style={{ padding: '8px 12px' }}>
             <Info size={16} />
           </button>
@@ -1844,6 +1867,186 @@ function App() {
               <button className="btn-primary" onClick={() => setShowInfoModal(false)}>
                 Got It
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Onboarding Guided Tour */}
+      {showOnboarding && (
+        <div className="modal-overlay" onClick={handleCloseOnboarding}>
+          <div className="modal-content onboarding-card glass-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="onboarding-header">
+              <div className="onboarding-title">Formify PDF Guide</div>
+              <div className="onboarding-step-badge">Step {onboardingStep} of 5</div>
+            </div>
+
+            <div className="onboarding-content">
+              {onboardingStep === 1 && (
+                <div className="onboarding-slide">
+                  <div className="onboarding-welcome-icon">
+                    <Sparkles size={36} color="var(--color-primary)" />
+                  </div>
+                  <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Welcome to Formify PDF!</h3>
+                  <p style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
+                    Convert your exams, textbook pages, scanned PDFs, or handwritten test photos into fully functional, interactive Google Forms quizzes in seconds using advanced Google Gemini 1.5 Flash.
+                  </p>
+                  <div className="onboarding-illustration-box">
+                    <div className="onboarding-illustration-icon">
+                      <BookOpen size={24} color="var(--color-accent)" />
+                    </div>
+                    <div>
+                      <h4 style={{ fontWeight: 600, fontSize: '14px' }}>AI-Powered OCR & Structure</h4>
+                      <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>We automatically extract questions, choices, answers, point values, and formatting without manual work.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {onboardingStep === 2 && (
+                <div className="onboarding-slide">
+                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(6, 182, 212, 0.1)', borderColor: 'var(--color-accent)' }}>
+                    <Cpu size={36} color="var(--color-accent)" />
+                  </div>
+                  <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Step 1: Set Up Credentials</h3>
+                  <p style={{ color: 'var(--text-muted)' }}>
+                    To ensure complete privacy, Formify PDF runs 100% client-side. We require your personal API Keys so your documents and tokens never touch our servers.
+                  </p>
+                  <div className="onboarding-feature-list">
+                    <div className="onboarding-feature-pill">
+                      <Settings className="onboarding-feature-pill-icon" size={16} />
+                      <div>
+                        <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Gemini Developer API Key (Required)</h4>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Obtain a free API Key in 30 seconds from Google AI Studio to unlock OCR features.</p>
+                      </div>
+                    </div>
+                    <div className="onboarding-feature-pill">
+                      <CheckCircle2 className="onboarding-feature-pill-icon" size={16} />
+                      <div>
+                        <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Google Cloud Client ID (Optional)</h4>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Configure a Google OAuth Client ID to upload question diagram images and create Google Forms directly from the workspace.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {onboardingStep === 3 && (
+                <div className="onboarding-slide">
+                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(168, 85, 247, 0.1)', borderColor: 'var(--color-secondary)' }}>
+                    <Upload size={36} color="var(--color-secondary)" />
+                  </div>
+                  <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Step 2: Upload Documents</h3>
+                  <p style={{ color: 'var(--text-muted)' }}>
+                    Formify PDF accepts standard text PDFs, scanned documents, and images (PNG, JPG, JPEG, WEBP).
+                  </p>
+                  <div className="onboarding-illustration-box">
+                    <div className="onboarding-illustration-icon">
+                      <FileSpreadsheet size={24} color="var(--color-secondary)" />
+                    </div>
+                    <div>
+                      <h4 style={{ fontWeight: 600, fontSize: '14px' }}>Drag & Drop Uploader</h4>
+                      <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Simply drag your test paper file into the workspace dashboard. Gemini's multimodal visual OCR handles the rest, scanning and reading multiple columns or handwritten structures.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {onboardingStep === 4 && (
+                <div className="onboarding-slide">
+                  <div className="onboarding-welcome-icon">
+                    <Layers size={36} color="var(--color-primary)" />
+                  </div>
+                  <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Step 3: Question Editor & Simulator</h3>
+                  <p style={{ color: 'var(--text-muted)' }}>
+                    Once parsed, your questions open in our dual-pane workspace.
+                  </p>
+                  <div className="onboarding-feature-list">
+                    <div className="onboarding-feature-pill">
+                      <Sparkles className="onboarding-feature-pill-icon" size={16} />
+                      <div>
+                        <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Interactive Editor & Math Rendering</h4>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Edit questions, add multiple choices, attach diagram images via drag & drop / copy-paste, and preview LaTeX equations rendered beautifully in real time via KaTeX.</p>
+                      </div>
+                    </div>
+                    <div className="onboarding-feature-pill">
+                      <Tv className="onboarding-feature-pill-icon" size={16} />
+                      <div>
+                        <h4 style={{ fontSize: '13px', fontWeight: 600 }}>High-Fidelity Google Forms Simulator</h4>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>The right-hand pane replicates the exact look, colors, and layout of a published Google Form, showing you how your students will see the questions.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {onboardingStep === 5 && (
+                <div className="onboarding-slide">
+                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(6, 182, 212, 0.1)', borderColor: 'var(--color-accent)' }}>
+                    <Download size={36} color="var(--color-accent)'" />
+                  </div>
+                  <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Step 4: Exporters & Fallbacks</h3>
+                  <p style={{ color: 'var(--text-muted)' }}>
+                    Ready to publish? Choose from our multiple export strategies:
+                  </p>
+                  <div className="onboarding-feature-list">
+                    <div className="onboarding-feature-pill">
+                      <CheckCircle2 className="onboarding-feature-pill-icon" size={16} color="var(--color-success)" />
+                      <div>
+                        <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Method A: Direct Creator (OAuth)</h4>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Automatically build the form and upload attached diagram images to your Google Drive in one click.</p>
+                      </div>
+                    </div>
+                    <div className="onboarding-feature-pill">
+                      <Settings className="onboarding-feature-pill-icon" size={16} color="var(--color-secondary)" />
+                      <div>
+                        <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Method B: Google Apps Script (Zero Setup)</h4>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>No Client ID setup? Copy the generated Apps Script, paste it into script.new, and run it to create your Form instantly.</p>
+                      </div>
+                    </div>
+                    <div className="onboarding-feature-pill">
+                      <Download className="onboarding-feature-pill-icon" size={16} color="var(--color-accent)" />
+                      <div>
+                        <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Alternative LMS Downloads</h4>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Download your quiz configuration as Moodle XML, Kahoot CSV, Quizizz template, JSON, or standard CSV.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="onboarding-footer">
+              <button className="onboarding-btn-skip" onClick={handleCloseOnboarding}>
+                {onboardingStep === 5 ? 'Close' : 'Skip Tour'}
+              </button>
+
+              <div className="onboarding-dots-container">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <div
+                    key={s}
+                    className={`onboarding-dot ${onboardingStep === s ? 'active' : ''}`}
+                    onClick={() => setOnboardingStep(s)}
+                  />
+                ))}
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px' }}>
+                {onboardingStep > 1 && (
+                  <button className="btn-secondary" onClick={() => setOnboardingStep((p) => p - 1)} style={{ padding: '8px 16px', fontSize: '13px' }}>
+                    Back
+                  </button>
+                )}
+                {onboardingStep < 5 ? (
+                  <button className="btn-primary" onClick={() => setOnboardingStep((p) => p + 1)} style={{ padding: '8px 16px', fontSize: '13px' }}>
+                    Next
+                  </button>
+                ) : (
+                  <button className="btn-primary" onClick={handleCloseOnboarding} style={{ padding: '8px 16px', fontSize: '13px' }}>
+                    Get Started!
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
