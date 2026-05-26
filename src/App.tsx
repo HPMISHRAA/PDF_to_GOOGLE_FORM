@@ -1917,7 +1917,19 @@ function App() {
                       <Settings className="onboarding-feature-pill-icon" size={16} />
                       <div>
                         <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Gemini Developer API Key (Required)</h4>
-                        <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Obtain a free API Key in 30 seconds from Google AI Studio to unlock OCR features.</p>
+                        <p style={{ fontSize: '12px', color: 'var(--text-dim)', marginBottom: '8px' }}>
+                          Powers the AI question scanning. It is 100% free and takes 30 seconds to get:
+                        </p>
+                        <ol style={{ fontSize: '11px', color: 'var(--text-muted)', paddingLeft: '16px', margin: '4px 0', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <li>
+                            Open <a href="https://aistudio.google.com" target="_blank" rel="noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+                              Google AI Studio <ExternalLink size={10} style={{ display: 'inline' }} />
+                            </a>.
+                          </li>
+                          <li>Click the blue <strong>"Get API key"</strong> button in the sidebar/top menu.</li>
+                          <li>Click <strong>"Create API key"</strong> and copy your key.</li>
+                          <li>Paste it into our <strong>Credentials</strong> setup panel.</li>
+                        </ol>
                       </div>
                     </div>
                     <div className="onboarding-feature-pill">
