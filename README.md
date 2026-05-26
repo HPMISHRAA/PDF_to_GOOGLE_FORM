@@ -13,7 +13,11 @@ It includes an interactive question editor, a live-syncing Google Forms simulato
     *   **Method A (Direct REST API)**: Grant OAuth permissions via Google Identity Services (GIS) to automatically build the form directly in your Google Drive.
     *   **Method B (Google Apps Script)**: Copy-paste a generated App Script snippet into [script.new](https://script.new) to compile the form in Google Drive with **zero API configuration**.
 *   **Alternative Formats**: Download quiz configurations as **CSV**, **JSON**, **Moodle XML**, **Kahoot import templates**, or **Quizizz templates**.
-*   **Live Google Forms Simulator**: A realistic, live-updating mock view of your form displaying options, titles, description, points, and correct answer keys as you edit.
+*   **Live Google Forms Simulator with Themes**: A realistic, live-updating mock view of your form displaying options, titles, description, points, and correct answer keys as you edit. Includes an **interactive color theme switcher** (Classic Purple, Indigo, Teal, Red, Carbon) in the simulator header to preview your quiz in different Google Forms colors instantly.
+*   **Premium Obsidian & Champagne Gold Theme**: Styled with a luxury dark mode featuring a matte obsidian base (`#07070a`), warm slate translucent cards, metallic champagne gold (`#e5c158`) highlights, and a soft, low-opacity repeating dot-grid background texture.
+*   **5-Step Interactive Guided Tour**: A gorgeous onboarding wizard modal that launches automatically for first-time visitors (and can be re-run from the header **Tour** button) explaining Credentials, Uploads, Editing, and publishing fallbacks.
+*   **Draft Recovery Pulse Badge**: The "Resume Draft" button inside the sticky header displays a green breathing pulse dot notification to guide users back to their saved workspace.
+*   **Creative AI OCR Branding**: Utilizes a custom `BrainCircuit` symbol rather than generic stars to represent advanced visual text processing and neural network AI parsing.
 *   **Intelligent Validation**: Warns you about empty fields, duplicate options, duplicate questions, low-confidence OCR text, or missing correct keys.
 *   **Local Auto-Save**: Preserves your draft progress in `localStorage` so that you never lose your work on browser refreshes or crashes.
 *   **Bulk Actions Panel**: Collapsible panel above the question list enabling mass point changes, mass difficulty overrides, option choice shuffles (keeping answer keys aligned), and global regex-escaped search and replace text parsing.

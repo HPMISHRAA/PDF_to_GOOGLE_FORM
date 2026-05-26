@@ -19,10 +19,10 @@ import {
   HelpCircle,
   FileSpreadsheet,
   Compass,
-  Sparkles,
   Cpu,
   Layers,
-  Tv
+  Tv,
+  BrainCircuit
 } from 'lucide-react';
 import { GeminiService } from './services/GeminiService';
 import type { QuizData, Question } from './services/GeminiService';
@@ -197,10 +197,19 @@ interface Toast {
   type: 'success' | 'error' | 'warning' | 'info';
 }
 
+const gformThemesMap = {
+  purple: { primary: '#673ab7', bg: '#f0ebf8', name: 'Classic Purple' },
+  indigo: { primary: '#3f51b5', bg: '#e8eaf6', name: 'Indigo' },
+  teal: { primary: '#009688', bg: '#e0f2f1', name: 'Teal' },
+  red: { primary: '#db4437', bg: '#fce8e6', name: 'Red' },
+  carbon: { primary: '#5f6368', bg: '#f1f3f4', name: 'Carbon' }
+};
+
 function App() {
   // Navigation & Config State
   const [step, setStep] = useState<'config' | 'upload' | 'editor' | 'export'>('config');
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<'editor' | 'simulator'>('editor');
+  const [gformTheme, setGformTheme] = useState<'purple' | 'indigo' | 'teal' | 'red' | 'carbon'>('purple');
   const [isTranslating, setIsTranslating] = useState(false);
   const [translationLanguage, setTranslationLanguage] = useState('Spanish');
   const [showBulkActions, setShowBulkActions] = useState(false);
@@ -800,8 +809,9 @@ function App() {
         
         <div className="flex-row align-center gap-12">
           {draftExists && (
-            <button className="btn-secondary" onClick={handleRestoreDraft} style={{ padding: '8px 16px', fontSize: '13px' }}>
-               <RotateCcw size={14} /> Resume Draft
+            <button className="btn-secondary" onClick={handleRestoreDraft} style={{ padding: '8px 16px', fontSize: '13px', display: 'inline-flex', alignItems: 'center' }}>
+               <span className="pulse-dot" style={{ marginRight: '8px' }}></span>
+               <RotateCcw size={14} style={{ marginRight: '6px' }} /> Resume Draft
             </button>
           )}
           <button className="btn-secondary" onClick={() => { setOnboardingStep(1); setShowOnboarding(true); }} style={{ padding: '8px 12px' }} title="Take Guided Tour">
@@ -828,21 +838,21 @@ function App() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '16px', margin: '10px 0' }}>
             <div className="glass-card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center', background: 'rgba(255,255,255,0.01)' }}>
-              <div style={{ background: 'rgba(99, 102, 241, 0.1)', padding: '10px', borderRadius: '12px', border: '1px solid var(--color-primary-glow)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Sparkles size={20} color="var(--color-primary)" />
+              <div style={{ background: 'rgba(229, 193, 88, 0.08)', padding: '10px', borderRadius: '12px', border: '1px solid var(--color-primary-glow)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <BrainCircuit size={20} color="var(--color-primary)" />
               </div>
               <h4 style={{ fontSize: '13px', fontWeight: 600, fontFamily: 'var(--font-brand)' }}>AI MCQ OCR</h4>
               <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>Extracts scanned pages, handwriting, math, and diagrams instantly.</p>
             </div>
             <div className="glass-card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center', background: 'rgba(255,255,255,0.01)' }}>
-              <div style={{ background: 'rgba(6, 182, 212, 0.1)', padding: '10px', borderRadius: '12px', border: '1px solid rgba(6, 182, 212, 0.2)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ background: 'rgba(245, 235, 208, 0.06)', padding: '10px', borderRadius: '12px', border: '1px solid rgba(245, 235, 208, 0.15)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Tv size={20} color="var(--color-accent)" />
               </div>
               <h4 style={{ fontSize: '13px', fontWeight: 600, fontFamily: 'var(--font-brand)' }}>Live Simulator</h4>
               <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>Real-time preview matching Google Forms' layout exactly.</p>
             </div>
             <div className="glass-card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center', background: 'rgba(255,255,255,0.01)' }}>
-              <div style={{ background: 'rgba(168, 85, 247, 0.1)', padding: '10px', borderRadius: '12px', border: '1px solid rgba(168, 85, 247, 0.2)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ background: 'rgba(191, 161, 95, 0.08)', padding: '10px', borderRadius: '12px', border: '1px solid rgba(191, 161, 95, 0.2)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Download size={20} color="var(--color-secondary)" />
               </div>
               <h4 style={{ fontSize: '13px', fontWeight: 600, fontFamily: 'var(--font-brand)' }}>Double Export</h4>
@@ -1343,7 +1353,6 @@ function App() {
                     </div>
                   </div>
 
-                  {/* Question Title Input */}
                   <textarea
                     rows={2}
                     value={q.questionText}
@@ -1538,10 +1547,47 @@ function App() {
             </div>
           </section>
 
-          <section className="simulator-pane">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--gform-border)', paddingBottom: '10px', color: 'var(--gform-text)' }}>
-              <Eye size={18} color="var(--gform-purple)" />
-              <span style={{ fontWeight: 600, fontSize: '14px', fontFamily: 'var(--font-brand)' }}>Live Google Form Preview</span>
+          <section
+            className="simulator-pane"
+            style={{
+              '--gform-purple': gformThemesMap[gformTheme].primary,
+              '--gform-bg': gformThemesMap[gformTheme].bg,
+              '--gform-purple-light': gformThemesMap[gformTheme].bg
+            } as React.CSSProperties}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--gform-border)', paddingBottom: '10px', color: 'var(--gform-text)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Eye size={18} color="var(--gform-purple)" />
+                <span style={{ fontWeight: 600, fontSize: '14px', fontFamily: 'var(--font-brand)' }}>Live Google Form Preview</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ fontSize: '11px', color: 'var(--gform-text-muted)', marginRight: '4px' }}>Theme:</span>
+                {(Object.keys(gformThemesMap) as Array<keyof typeof gformThemesMap>).map((tKey) => {
+                  const themeObj = gformThemesMap[tKey];
+                  const isSelected = gformTheme === tKey;
+                  return (
+                    <button
+                      key={tKey}
+                      type="button"
+                      onClick={() => setGformTheme(tKey)}
+                      title={themeObj.name}
+                      style={{
+                        width: '14px',
+                        height: '14px',
+                        borderRadius: '50%',
+                        backgroundColor: themeObj.primary,
+                        border: isSelected ? '2px solid #ffffff' : '1px solid rgba(0,0,0,0.15)',
+                        cursor: 'pointer',
+                        padding: 0,
+                        boxShadow: isSelected ? '0 0 0 2px ' + themeObj.primary : 'none',
+                        transition: 'transform 0.15s ease'
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.25)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+                    />
+                  );
+                })}
+              </div>
             </div>
 
             {/* Google Form Title Card */}
@@ -1775,7 +1821,7 @@ function App() {
 
       {/* Footer */}
       <footer style={{ marginTop: 'auto', padding: '24px 40px', borderTop: '1px solid var(--border-light)', textAlign: 'center', color: 'var(--text-dim)', fontSize: '12px' }}>
-        <p>© 2026 Formify PDF. 100% client-side operations. Questions processed using Google Gemini 1.5 Flash.</p>
+        <p>© 2026 Formify PDF. 100% client-side operations.</p>
       </footer>
 
       {/* Modal: Credentials Setup */}
@@ -1950,7 +1996,7 @@ function App() {
               {onboardingStep === 1 && (
                 <div className="onboarding-slide">
                   <div className="onboarding-welcome-icon">
-                    <Sparkles size={36} color="var(--color-primary)" />
+                    <BrainCircuit size={36} color="var(--color-primary)" />
                   </div>
                   <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Welcome to Formify PDF!</h3>
                   <p style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
@@ -1970,7 +2016,7 @@ function App() {
 
               {onboardingStep === 2 && (
                 <div className="onboarding-slide">
-                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(6, 182, 212, 0.1)', borderColor: 'var(--color-accent)' }}>
+                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(245, 235, 208, 0.08)', borderColor: 'var(--color-accent)' }}>
                     <Cpu size={36} color="var(--color-accent)" />
                   </div>
                   <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Step 1: Set Up Credentials</h3>
@@ -2018,7 +2064,7 @@ function App() {
 
               {onboardingStep === 3 && (
                 <div className="onboarding-slide">
-                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(168, 85, 247, 0.1)', borderColor: 'var(--color-secondary)' }}>
+                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(191, 161, 95, 0.08)', borderColor: 'var(--color-secondary)' }}>
                     <Upload size={36} color="var(--color-secondary)" />
                   </div>
                   <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Step 2: Upload Documents</h3>
@@ -2048,7 +2094,7 @@ function App() {
                   </p>
                   <div className="onboarding-feature-list">
                     <div className="onboarding-feature-pill">
-                      <Sparkles className="onboarding-feature-pill-icon" size={16} />
+                      <BrainCircuit className="onboarding-feature-pill-icon" size={16} />
                       <div>
                         <h4 style={{ fontSize: '13px', fontWeight: 600 }}>Interactive Editor & Math Rendering</h4>
                         <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Edit questions, add multiple choices, attach diagram images via drag & drop / copy-paste, and preview LaTeX equations rendered beautifully in real time via KaTeX.</p>
@@ -2067,7 +2113,7 @@ function App() {
 
               {onboardingStep === 5 && (
                 <div className="onboarding-slide">
-                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(6, 182, 212, 0.1)', borderColor: 'var(--color-accent)' }}>
+                  <div className="onboarding-welcome-icon" style={{ background: 'rgba(245, 235, 208, 0.08)', borderColor: 'var(--color-accent)' }}>
                     <Download size={36} color="var(--color-accent)" />
                   </div>
                   <h3 style={{ textAlign: 'center', fontSize: '20px', marginBottom: '12px', fontFamily: 'var(--font-brand)' }}>Step 4: Exporters & Fallbacks</h3>
